@@ -17,12 +17,13 @@
 // ================================
 
 // --- Base class -------------------------------------------------
-class Shape {
+class Shape
+{
 protected:
     std::string name;
 
 public:
-    Shape(const std::string& n) : name(n) {}
+    Shape(const std::string &n) : name(n) {}
 
     // TODO 1: Make this destructor VIRTUAL.
     //         (Add the 'virtual' keyword in front.)
@@ -35,7 +36,8 @@ public:
     virtual double area() const = 0;
 
     // describe() is virtual with a default body — leave as is.
-    virtual std::string describe() const {
+    virtual std::string describe() const
+    {
         return name + " with area " + std::to_string(area());
     }
 
@@ -43,7 +45,8 @@ public:
 };
 
 // --- Derived class: Circle --------------------------------------
-class Circle : public Shape {
+class Circle : public Shape
+{
 private:
     double radius;
 
@@ -55,15 +58,16 @@ public:
 
     // TODO 3: Override area().  Area of a circle = PI * r * r.
     //         Use override.
-    double area() const override {
-     
-        return 3.14 * radius * radius;
-    }
+    double area() const override
+    {
 
+        return 3.14159265358979323846 * radius * radius;
+    }
 };
 
 // --- Derived class: Rectangle -----------------------------------
-class Rectangle : public Shape {
+class Rectangle : public Shape
+{
 protected:
     double width;
     double height;
@@ -75,20 +79,22 @@ public:
     Rectangle(double w, double h) : Shape("Rectangle"), width(w), height(h) {}
 
     // TODO 5: Override area().  Area of a rectangle = width * height.
-    double area() const override {
+    double area() const override
+    {
         return width * height;
     }
-
 };
 
 // --- Derived class: Square (inherits from Rectangle) ------------
-class Square : public Rectangle {
+class Square : public Rectangle
+{
 public:
     // TODO 6: Write the constructor.
     //   - A square is a rectangle whose width == height == side.
     //   - Call the Rectangle constructor with (side, side).
     //   - Then set name = "Square".
-    Square(double side) : Rectangle(side, side) {
+    Square(double side) : Rectangle(side, side)
+    {
         name = "Square";
     }
     // Note: Square reuses Rectangle::area() — no need to rewrite it.
@@ -101,10 +107,12 @@ public:
 // TODO 7: Sum the area() of every shape in the vector.
 //         Must work polymorphically (through Shape*).
 //         An empty vector returns 0.0.
-double totalArea(const std::vector<Shape*>& shapes) {
+double totalArea(const std::vector<Shape *> &shapes)
+{
     // TODO
     double sum = 0.0;
-    for (const Shape* s : shapes) {
+    for (const Shape *s : shapes)
+    {
         sum += s->area();
     }
     return sum;
@@ -112,12 +120,16 @@ double totalArea(const std::vector<Shape*>& shapes) {
 
 // TODO 8: Return getName() of the shape with the LARGEST area.
 //         If the vector is empty, return "".
-std::string largestShapeName(const std::vector<Shape*>& shapes) {
+std::string largestShapeName(const std::vector<Shape *> &shapes)
+{
     // TODO
-    if (shapes.empty()) return "";
-    const Shape* largest = shapes[0];
-    for (const Shape* s : shapes) {
-        if (s->area() > largest->area()) {
+    if (shapes.empty())
+        return "";
+    const Shape *largest = shapes[0];
+    for (const Shape *s : shapes)
+    {
+        if (s->area() > largest->area())
+        {
             largest = s;
         }
     }
@@ -127,19 +139,22 @@ std::string largestShapeName(const std::vector<Shape*>& shapes) {
 // ================================
 // MAIN
 // ================================
-int main() {
-    std::vector<Shape*> shapes;
+int main()
+{
+    std::vector<Shape *> shapes;
     shapes.push_back(new Circle(2.0));
     shapes.push_back(new Rectangle(3.0, 4.0));
     shapes.push_back(new Square(5.0));
 
-    for (const Shape* s : shapes) {
+    for (const Shape *s : shapes)
+    {
         std::cout << s->describe() << std::endl;
     }
 
     std::cout << "Total area: " << totalArea(shapes) << std::endl;
     std::cout << "Largest:    " << largestShapeName(shapes) << std::endl;
 
-    for (Shape* s : shapes) delete s;
+    for (Shape *s : shapes)
+        delete s;
     return 0;
 }
